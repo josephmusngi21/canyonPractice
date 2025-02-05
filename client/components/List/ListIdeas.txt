@@ -1,0 +1,43 @@
+import React, { useState, useEffect } from "react";
+import { View, Text, Button } from "react-native";
+
+// Function to save data to local storage
+const saveDataToLocalStorage = (data) => {
+  const existingData = JSON.parse(localStorage.getItem("drivingData")) || [];
+  const newData = existingData.concat(data);
+  localStorage.setItem("drivingData", JSON.stringify(newData));
+};
+
+export default function List() {
+  const [drivingData, setDrivingData] = useState([]);
+  const [isCollecting, setIsCollecting] = useState(false);
+
+  useEffect(() => {
+    let interval;
+    if (isCollecting) {
+      interval = setInterval(() => {
+        // Simulate collecting data
+        const newDataPoint = {
+          time: new Date().toISOString(),
+          speed: Math.random() * 100, // Replace with actual speed data
+          elevation: Math.random() * 1000, // Replace with actual elevation data
+        };
+        setDrivingData((prevData) => [...prevData, newDataPoint]);
+      }, 1000); // Collect data every second
+    }
+    return () => clearInterval(interval);
+  }, [isCollecting]);
+
+  const handleSaveData = () => {
+    saveDataToLocalStorage(drivingData);
+    setDrivingData([]);
+  };
+
+  return (
+    <View>
+      <Text>List</Text>
+      <Button title={isCollecting ? "Stop Collecting" : "Start Collecting"} onPress={() => setIsCollecting(!isCollecting)} />
+      <Button title="Save Data" onPress={handleSaveData} />
+    </View>
+  );
+}
