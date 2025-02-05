@@ -7,4 +7,4 @@ export default function List() {
       <Text>List</Text>
     </View>
   );
-}s
+}
