@@ -27,9 +27,9 @@ export default function Timer() {
         console.log('Button clicked');
     };
 
-    return (
-        <View>
-            <Text>{time.toFixed(2)}</Text>
+return (
+    <View>
+            <View></View>
             {!pressed && <Button onPress={onStart} title="Start" />}
             {pressed && (
                 <>
@@ -37,6 +37,6 @@ export default function Timer() {
                     <Button onPress={onStart} title="Start" />
                 </>
             )}
-        </View>
-    );
+    </View>
+);
 }
