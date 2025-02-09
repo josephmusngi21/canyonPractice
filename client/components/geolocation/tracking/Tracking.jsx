@@ -21,16 +21,16 @@ const Tracking = () => {
         })();
     }, []);
 
-    let text = 'Waiting..';
+    let locationText = 'Waiting..';
     if (errorMsg) {
-        text = errorMsg;
+        locationText = errorMsg;
     } else if (location) {
-        text = JSON.stringify(location);
+        locationText = JSON.stringify(location);
     }
 
     return (
         <View>
-            <Text>{text}</Text>
+            <Text>{locationText}</Text>
         </View>
     );
 };
