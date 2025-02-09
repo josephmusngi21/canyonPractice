@@ -38,3 +38,6 @@ yarn-error.*
 app-example
 
 /notes
+
+# toDo's
+*todo.txt
