@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { saveLocationDataToServer } from '../../utils/api';
 
 const Tracking = () => {
     const [locationData, setLocationData] = useState([]);
@@ -13,15 +12,17 @@ const Tracking = () => {
         let watchId;
 
         const startTracking = async () => {
+            // Request location permissions
             const { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
                 return;
             }
 
+            // Start watching the location
             watchId = await Location.watchPositionAsync(
                 {
-                    accuracy: Location.Accuracy.High,
+                    accuracy: Location.Accuracy.Highest,
                     timeInterval: 1000,
                     distanceInterval: 1,
                 },
@@ -37,9 +38,11 @@ const Tracking = () => {
         if (isTracking) {
             startTracking();
         } else if (watchId) {
+            // Stop watching the location
             Location.clearWatchAsync(watchId);
         }
 
+        // Cleanup function to stop watching the location when the component unmounts
         return () => {
             if (watchId) {
                 Location.clearWatchAsync(watchId);
@@ -49,6 +52,7 @@ const Tracking = () => {
 
     const handleSaveData = async () => {
         try {
+            // Save location data to the server and local storage
             await saveLocationDataToServer(locationData);
             await AsyncStorage.setItem('locationData', JSON.stringify(locationData));
             setLocationData([]);
