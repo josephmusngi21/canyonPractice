@@ -1,11 +1,13 @@
+const express = require('express');
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
-// Connection URL
+const app = express();
+const port = process.env.PORT || 3000;
+
 const url = process.env.CONNECTION_STRING;
 const client = new MongoClient(url);
 
-// Database Name
 const dbName = 'runs';
 
 async function main() {
@@ -14,10 +16,17 @@ async function main() {
     console.log('Connected successfully to server');
     const db = client.db(dbName);
 
-    // Perform operations on the database here
+    // Operations on the database here
 
-    // Close the connection
-    await client.close();
+    // Example route
+    app.get('/', (req, res) => {
+        res.send('Hello World!');
+    });
+
+    // Start the Express server
+    app.listen(port, () => {
+        console.log(`Server is running on http://localhost:${port}`);
+    });
 }
 
 main().catch(console.error);
