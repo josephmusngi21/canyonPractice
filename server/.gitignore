@@ -1,2 +1,5 @@
-#assets
+# Assets
 assets.env
+
+# Node Modules
+/node_modules
