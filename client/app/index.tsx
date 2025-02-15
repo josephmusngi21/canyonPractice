@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Tracking from '../components/geolocation/tracking/Tracking.jsx';
+import Timer from '../components/timer/Timer.jsx';
+import List from '../components/List/List.jsx';
 
 export default function Index() {
   return (
