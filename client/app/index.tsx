@@ -7,7 +7,9 @@ import List from '../components/List/List.jsx';
 export default function Index() {
   return (
     <View style={styles.container}>
+      <Timer />
       <Tracking />
+      <List />
     </View>
   );
 }
