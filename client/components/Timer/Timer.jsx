@@ -28,15 +28,16 @@ export default function Timer() {
     };
 
 return (
-    <View>
-            <View></View>
-            {!pressed && <Button onPress={onStart} title="Start" />}
-            {pressed && (
-                <>
-                    <Button onPress={onEnd} title="End" />
-                    <Button onPress={onStart} title="Start" />
-                </>
-            )}
+    <View style={{ padding: 20, alignItems: 'center' }}>
+        <Text style={{ fontSize: 48, marginBottom: 20 }}>
+            {time.toFixed(2)}s
+        </Text>
+        {!pressed && <Button onPress={onStart} title="Start" />}
+        {pressed && (
+            <>
+                <Button onPress={onEnd} title="End" />
+            </>
+        )}
     </View>
 );
 }
