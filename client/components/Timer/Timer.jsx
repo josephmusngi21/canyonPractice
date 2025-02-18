@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
 
 export default function Timer() {
     const [time, setTime] = useState(0.00);
@@ -27,17 +27,28 @@ export default function Timer() {
         console.log('Button clicked');
     };
 
-return (
-    <View style={{ padding: 20, alignItems: 'center' }}>
-        <Text style={{ fontSize: 48, marginBottom: 20 }}>
-            {time.toFixed(2)}s
-        </Text>
-        {!pressed && <Button onPress={onStart} title="Start" />}
-        {pressed && (
-            <>
-                <Button onPress={onEnd} title="End" />
-            </>
-        )}
-    </View>
-);
+    return (
+        <View style={styles.container}>
+            <Text style={styles.timerText}>
+                {time.toFixed(2)}s
+            </Text>
+            {!pressed && <Button onPress={onStart} title="Start" />}
+            {pressed && (
+                <>
+                    <Button onPress={onEnd} title="End" />
+                </>
+            )}
+        </View>
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+        alignItems: 'center'
+    },
+    timerText: {
+        fontSize: 48,
+        marginBottom: 20
+    }
+});
