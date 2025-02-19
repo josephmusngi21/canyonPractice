@@ -1,5 +1,6 @@
-const { MongoCLient, ServerApiVersion } = require("mongodb");
-require("dotenv").config({ path: "./assets.env" });
+import { MongoClient, ServerApiVersion } from "mongodb";
+import dotenv from "dotenv";
+dotenv.config({ path: "./assets.env" });
 const uri = process.env.MONGO_URI;
 
 const client = new MongoClient(uri, {
