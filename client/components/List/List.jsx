@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import addList from "./addList"; // Adjust the import path as necessary
+import { getLocationDataFromServer, saveLocationDataToServer } from "../../utils/api";
 
 export default function List() {
   const [place, setPlace] = useState("");
@@ -10,7 +11,16 @@ export default function List() {
   const [endLatitude, setEndLatitude] = useState("");
   const [locations, setLocations] = useState([]);
 
-  const handleAddLocation = () => {
+  useEffect(() => {
+    const fetchLocations = async () => {
+      const data = await getLocationDataFromServer();
+      setLocations(data.map(loc => new addList(loc.place, loc.startLongitude, loc.startLatitude, loc.endLongitude, loc.endLatitude)));
+    };
+
+    fetchLocations();
+  }, []);
+
+  const handleAddLocation = async () => {
     const newLocation = new addList(
       place,
       parseFloat(startLongitude),
@@ -24,6 +34,8 @@ export default function List() {
     setStartLatitude("");
     setEndLongitude("");
     setEndLatitude("");
+
+    await saveLocationDataToServer([newLocation]);
   };
 
   return (
