@@ -1,0 +1,92 @@
+{
+    "canyonRoads": [
+        {
+            "name": "Tuna Canyon",
+            "start": {
+                "latitude": 34.0614,
+                "longitude": -118.6059
+            },
+            "end": {
+                "latitude": 34.0345,
+                "longitude": -118.5913
+            }
+        },
+        {
+            "name": "Topanga Canyon",
+            "start": {
+                "latitude": 34.0917,
+                "longitude": -118.6022
+            },
+            "end": {
+                "latitude": 34.1446,
+                "longitude": -118.6011
+            }
+        },
+        {
+            "name": "Mt. Lemmon",
+            "start": {
+                "latitude": 32.3541,
+                "longitude": -110.7258
+            },
+            "end": {
+                "latitude": 32.4421,
+                "longitude": -110.7884
+            }
+        },
+        {
+            "name": "Angeles Crest Highway",
+            "start": {
+                "latitude": 34.2429,
+                "longitude": -118.2506
+            },
+            "end": {
+                "latitude": 34.3234,
+                "longitude": -117.9033
+            }
+        },
+        {
+            "name": "Mulholland Drive",
+            "start": {
+                "latitude": 34.1341,
+                "longitude": -118.3520
+            },
+            "end": {
+                "latitude": 34.1606,
+                "longitude": -118.6493
+            }
+        },
+        {
+            "name": "Glendora Mountain Road",
+            "start": {
+                "latitude": 34.1362,
+                "longitude": -117.8653
+            },
+            "end": {
+                "latitude": 34.2361,
+                "longitude": -117.8034
+            }
+        },
+        {
+            "name": "South Mountain Road",
+            "start": {
+                "latitude": 34.3421,
+                "longitude": -119.0617
+            },
+            "end": {
+                "latitude": 34.2921,
+                "longitude": -119.0917
+            }
+        },
+        {
+            "name": "Catalina Highway",
+            "start": {
+                "latitude": 32.2434,
+                "longitude": -110.7377
+            },
+            "end": {
+                "latitude": 32.4421,
+                "longitude": -110.7884
+            }
+        }
+    ]
+}

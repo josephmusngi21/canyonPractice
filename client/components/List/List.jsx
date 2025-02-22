@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import addList from "./addList"; // Adjust the import path as necessary
-import { getLocationDataFromServer, saveLocationDataToServer } from "../../utils/api";
+import { getLocationDataFromServer, saveLocationDataToServer } from "../../util/api.js";
 
 export default function List() {
   const [place, setPlace] = useState("");
@@ -79,7 +79,6 @@ export default function List() {
           <Text>Start Latitude: {location.getStartLatitude()}</Text>
           <Text>End Longitude: {location.getEndLongitude()}</Text>
           <Text>End Latitude: {location.getEndLatitude()}</Text>
-          <Text>Distance: {location.calculateDistance()} km</Text>
         </View>
       ))}
     </View>
