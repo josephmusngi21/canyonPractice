@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Button } from 'react-native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,45 +7,51 @@ const Tracking = () => {
     const [locationData, setLocationData] = useState([]);
     const [isTracking, setIsTracking] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
+    const watchId = useRef(null);
 
     useEffect(() => {
-        let watchId;
-
         const startTracking = async () => {
-            // Request location permissions
-            const { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
-                return;
-            }
-
-            // Start watching the location
-            watchId = await Location.watchPositionAsync(
-                {
-                    accuracy: Location.Accuracy.Highest,
-                    timeInterval: 1000,
-                    distanceInterval: 1,
-                },
-                (location) => {
-                    const { latitude, longitude, speed } = location.coords;
-                    const timestamp = new Date().toISOString();
-                    const newLocationData = { latitude, longitude, speed, timestamp };
-                    setLocationData((prevData) => [...prevData, newLocationData]);
+            try {
+                // Request location permissions
+                const { status } = await Location.requestForegroundPermissionsAsync();
+                if (status !== 'granted') {
+                    setErrorMsg('Permission to access location was denied');
+                    return;
                 }
-            );
+
+                // Start watching the location
+                watchId.current = await Location.watchPositionAsync(
+                    {
+                        accuracy: Location.Accuracy.Highest,
+                        timeInterval: 1000,
+                        distanceInterval: 1,
+                    },
+                    (location) => {
+                        const { latitude, longitude, speed } = location.coords;
+                        const timestamp = new Date().toISOString();
+                        const newLocationData = { latitude, longitude, speed, timestamp };
+                        setLocationData((prevData) => [...prevData, newLocationData]);
+                    }
+                );
+            } catch (error) {
+                setErrorMsg('Failed to start tracking');
+                console.error(error);
+            }
         };
 
         if (isTracking) {
             startTracking();
-        } else if (watchId) {
+        } else if (watchId.current) {
             // Stop watching the location
-            Location.clearWatchAsync(watchId);
+            watchId.current.remove();
+            watchId.current = null;
         }
 
         // Cleanup function to stop watching the location when the component unmounts
         return () => {
-            if (watchId) {
-                Location.clearWatchAsync(watchId);
+            if (watchId.current) {
+                watchId.current.remove();
+                watchId.current = null;
             }
         };
     }, [isTracking]);
