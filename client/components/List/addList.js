@@ -27,6 +27,24 @@ class addList {
         return this.endLatitude;
     }
 
+    setPlace(newPlace) {
+        this.place = newPlace;
+    }
+
+    setStartCoordinates(longitude, latitude) {
+        this.startLongitude = longitude;
+        this.startLatitude = latitude;
+    }
+
+    setEndCoordinates(longitude, latitude) {
+        this.endLongitude = longitude;
+        this.endLatitude = latitude;
+    }
+
+    validateCoordinates(longitude, latitude) {
+        return longitude >= -180 && longitude <= 180 && latitude >= -90 && latitude <= 90;
+    }
+
     calculateDistance() {
         if (this.endLongitude === null || this.endLatitude === null) {
             return null;
@@ -43,5 +61,18 @@ class addList {
         const distance = R * c; // Distance in kilometers
 
         return distance;
+    }
+
+    calculateDistanceInMiles() {
+        const distanceInKm = this.calculateDistance();
+        if (distanceInKm === null) {
+            return null;
+        }
+        const kmToMiles = 0.621371;
+        return distanceInKm * kmToMiles;
+    }
+
+    static fromObject(obj) {
+        return new addList(obj.place, obj.startLongitude, obj.startLatitude, obj.endLongitude, obj.endLatitude);
     }
 }
