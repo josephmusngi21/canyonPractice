@@ -4,6 +4,7 @@ import addList from "./addList";
 import { getLocationDataFromServer, saveLocationDataToServer } from "../../util/api.js";
 
 export default function List() {
+  // State variables for input fields and locations list
   const [place, setPlace] = useState("");
   const [startLongitude, setStartLongitude] = useState("");
   const [startLatitude, setStartLatitude] = useState("");
@@ -11,16 +12,21 @@ export default function List() {
   const [endLatitude, setEndLatitude] = useState("");
   const [locations, setLocations] = useState([]);
 
+  // Fetch locations from server when component mounts
   useEffect(() => {
     const fetchLocations = async () => {
+      // Get location data from server
       const data = await getLocationDataFromServer();
+      // Map the data to addList instances and update state
       setLocations(data.map(loc => new addList(loc.place, loc.startLongitude, loc.startLatitude, loc.endLongitude, loc.endLatitude)));
     };
 
     fetchLocations();
   }, []);
 
+  // Handle adding a new location
   const handleAddLocation = async () => {
+    // Create a new location instance
     const newLocation = new addList(
       place,
       parseFloat(startLongitude),
@@ -28,13 +34,16 @@ export default function List() {
       parseFloat(endLongitude),
       parseFloat(endLatitude)
     );
+    // Update locations state with new location
     setLocations([...locations, newLocation]);
+    // Clear input fields
     setPlace("");
     setStartLongitude("");
     setStartLatitude("");
     setEndLongitude("");
     setEndLatitude("");
 
+    // Save new location to server
     await saveLocationDataToServer([newLocation]);
   };
 
@@ -79,11 +88,10 @@ export default function List() {
       <Text style={styles.subHeader}>Locations:</Text>
       {locations.map((location, index) => (
         <View key={index} style={styles.locationContainer}>
-          <Text>Place: {location.getPlace()}</Text>
-          <Text>Start Longitude: {location.getStartLongitude()}</Text>
-          <Text>Start Latitude: {location.getStartLatitude()}</Text>
-          <Text>End Longitude: {location.getEndLongitude()}</Text>
-          <Text>End Latitude: {location.getEndLatitude()}</Text>
+          {/* Display location details */}
+          <Text>{location.place}</Text>
+          <Text>Start: {location.startLongitude}, {location.startLatitude}</Text>
+          <Text>End: {location.endLongitude}, {location.endLatitude}</Text>
         </View>
       ))}
     </ScrollView>
