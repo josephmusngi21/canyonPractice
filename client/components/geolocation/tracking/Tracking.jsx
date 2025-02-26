@@ -38,7 +38,7 @@ const Tracking = () => {
                 console.error(error);
             }
         };
-
+        //todo: need to fix stop tracking, currently crashing
         if (isTracking) {
             startTracking();
         } else if (watchId.current) {
