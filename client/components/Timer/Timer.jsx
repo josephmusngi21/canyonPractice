@@ -14,7 +14,7 @@ export default function Timer() {
             interval = setInterval(() => {
                 setTime(prevTime => prevTime + 0.01);
             }, 10);
-        } else if (!pressed && time !== 0) {
+        } else {
             // If the timer is stopped, clear the interval
             clearInterval(interval);
         }
@@ -25,13 +25,20 @@ export default function Timer() {
     // Function to start the timer
     const onStart = () => {
         setPressed(true);
-        console.log('Button clicked');
+        console.log('Start button clicked');
     };
 
     // Function to stop the timer
     const onEnd = () => {
         setPressed(false);
-        console.log('Button clicked');
+        console.log('Stop button clicked');
+    };
+
+    // Function to reset the timer
+    const onReset = () => {
+        setPressed(false);
+        setTime(0.00);
+        console.log('Reset button clicked');
     };
 
     return (
@@ -40,11 +47,8 @@ export default function Timer() {
                 {time.toFixed(2)}s
             </Text>
             {!pressed && <Button onPress={onStart} title="Start" />}
-            {pressed && (
-                <>
-                    <Button onPress={onEnd} title="End" />
-                </>
-            )}
+            {pressed && <Button onPress={onEnd} title="Stop" />}
+            <Button onPress={onReset} title="Reset" />
         </View>
     );
 }
